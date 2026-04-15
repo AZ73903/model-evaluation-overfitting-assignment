@@ -1,2 +1,7 @@
 # model-evaluation-overfitting-assignment
 Week 12 homework
+
+The baseline model achieved 87.79% test accuracy after 10 epochs with no regularization. The improved model, despite adding Batch Normalization, Dropout, L2 regularization, and early stopping, regressed to approximately 78% validation accuracy due to data augmentation being incompatible with a flat MLP architecture — spatial transforms destroy the spatial relationships that make augmentation useful. Removing augmentation while keeping the other regularization techniques would be expected to outperform the baseline.
+Reflections
+
+The improved model incorporated Batch Normalization, Dropout (0.3), L2 regularization, early stopping, and data augmentation, though the results revealed an important architectural mismatch. The baseline achieved 88.61% validation accuracy and 87.79% test accuracy, while the improved model stalled near 78% a regression caused primarily by data augmentation: rotation, shifting, and horizontal flipping add meaningful variation for CNNs that preserve spatial structure, but are counterproductive for a dense MLP that immediately flattens the image to a 784-dimensional vector, turning augmentation into noise rather than generalization signal. Batch Normalization, Dropout, and early stopping remain sound techniques for this architecture, as the baseline's widening train/val gap after epoch 7 confirms regularization was genuinely needed the augmentation simply overwhelmed those gains.
